@@ -1,4 +1,4 @@
-namespace BlogApi.Mapping.Category
+namespace BlogApi.Mapping.CategoryViewModel
 {
     public class GetCategoryViewModel
     {
