@@ -1,14 +1,16 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using BlogApi.Entities.Identity;
 using BlogApi.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlogApi.Context
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 
@@ -29,7 +31,7 @@ namespace BlogApi.Context
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
-                    
+
                 }
             }
             return base.SaveChangesAsync(cancellationToken);
@@ -37,7 +39,10 @@ namespace BlogApi.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Category>(entity => {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Category>(entity =>
+            {
                 entity.ToTable("Category");
             });
         }

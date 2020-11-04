@@ -1,6 +1,6 @@
 namespace BlogApi.Features
 {
-    public class Response<T> 
+    public class Response<T>
     {
         public bool Status { get; set; }
         public T Data { get; set; }
@@ -12,7 +12,7 @@ namespace BlogApi.Features
             Data = data;
             Message = "Succesfull.";
         }
-        
+
         public Response(string message)
         {
             Status = false;
