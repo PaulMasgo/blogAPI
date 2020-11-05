@@ -15,7 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace BlogApi.Controllers
 {
     [ApiController]
-    [Route("api/[controllerx|]")]
+    [Route("api/[controller]")]
     public class AuthenticateController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManagaer;
@@ -73,8 +73,8 @@ namespace BlogApi.Controllers
         [Route("register")]
         public async Task<IActionResult> Register(RegisterModel registerModel)
         {
-            var userExist = _userManagaer.FindByEmailAsync(registerModel.Email)
-          if (userExist != null)
+            var userExist = _userManagaer.FindByEmailAsync(registerModel.Email);
+            if (userExist != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new ResponseServer { Status = "Error", Message = "User already Exist!" });
 
             ApplicationUser User = new ApplicationUser()
@@ -96,11 +96,11 @@ namespace BlogApi.Controllers
         [Route("register-admin")]
         public async Task<IActionResult> RegisterAdmin(RegisterModel registerModel)
         {
-            vat = _userManaga er.FindByEmailAsync(registerModel.Email);
-            if (userExist != null)
+            var userExist = _userManagaer.FindByEmailAsync(registerModel.Email);
+            if (userExist.Result != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new ResponseServer { Status = "Error", Message = "User already Exist!" });
 
-                   ApplicationUser User = new ApplicationUser()
+            ApplicationUser User = new ApplicationUser()
             {
                 Email = registerModel.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
@@ -109,16 +109,16 @@ namespace BlogApi.Controllers
 
             var result = await _userManagaer.CreateAsync(User, registerModel.Password);
 
-            if (!result. Succeeded)
+            if (!result.Succeeded)
                 return StatusCode(StatusCodes.Status500InternalServerError, new ResponseServer { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
-            if (! await _roleManager.RoleExistsAsync(UserRoles.Admin))
+            if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
                 await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
 
             if (!await _roleManager.RoleExistsAsync(UserRoles.User))
                 await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
- 
-            if(await _roleManager.RoleExistsAsync(UserRoles.Admin))
+
+            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
             {
                 await _userManagaer.AddToRoleAsync(User, UserRoles.Admin);
             }
