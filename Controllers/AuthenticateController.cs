@@ -104,7 +104,10 @@ namespace BlogApi.Controllers
             {
                 Email = registerModel.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = registerModel.Name
+                UserName = registerModel.Name,
+                BirthDate = registerModel.BirthDate,
+                FirstName = registerModel.FirstName,
+                LastName = registerModel.LastName
             };
 
             var result = await _userManagaer.CreateAsync(User, registerModel.Password);

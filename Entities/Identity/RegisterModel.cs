@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace BlogApi.Entities.Identity
@@ -12,5 +13,14 @@ namespace BlogApi.Entities.Identity
 
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
+
+        [Required(ErrorMessage = "FirstName is required")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "LastName is required")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "BirthDate is required")]
+        public DateTime BirthDate { get; set; }
     }
 }
